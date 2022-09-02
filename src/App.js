@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./App.css";
+import PageContentForm from "./page-content-form/page-content-form";
+import { createContext, useState } from "react";
+import Modal from "./page-content-form/components/modal";
+const FormContext = createContext({});
+let pages = [
+  {
+    uuid: Math.random(),
+    name: "page1",
+    description: "description",
+    content: [
+      {
+        type: "Form",
+        content: {},
+      },
+      {
+        type: "List",
+        content: {},
+      },
+    ],
+  },
+];
 function App() {
+  const [modal, setModal] = useState();
+  const [data, setData] = useState(pages);
+  const [forms, setForms] = useState([
+    {
+      name: "abc",
+      uuid: "12312321132312",
+    },
+    {
+      name: "bca",
+      uuid: "",
+    },
+  ]);
+  const updateObject = (key, field, value, original) => {
+    try {
+      field[key] = value;
+      setData([...original]);
+    } catch (e) {}
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FormContext.Provider value={{ setModal, data, setData, forms, updateObject}}>
+      <PageContentForm />
+      <Modal modal={modal} />
+    </FormContext.Provider>
   );
 }
-
+export { FormContext };
 export default App;
