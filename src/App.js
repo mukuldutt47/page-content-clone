@@ -6,22 +6,51 @@ import Modal from "./page-content-form/components/modal";
 const FormContext = createContext({});
 let pages = [
   {
-    uuid: "123",
+    uuid: "1",
     name: "page1",
     description: "description",
     content: [
       {
-        type: "Form",
-        content: {},
-      },
-      {
         type: "RenderButtons",
         content: {
-         buttonList : [{
-          icon : 'abc',
-          rule : 'true',
-          details : [{form_id : 'form', type : 'form'}]
-         }]
+          buttonList: [
+            {
+              icon: "abc",
+              rule: "true",
+              details: [{ form_id: "form", type: "form" }],
+            },
+          ],
+        },
+      },
+      {
+        type: "Page",
+        page_id: "2",
+      },
+    ],
+  },
+  {
+    uuid: "2",
+    name: "page2",
+    description: "description",
+    content: [
+      {
+        type: "HTML",
+        htmlContent: "abc",
+      },
+    ],
+  },
+  {
+    uuid: "2",
+    name: "page2",
+    description: "description",
+    content: [
+      {
+        type: "TabSegment",
+        content: {
+          tabs: [
+            { name: "tab1", content: { type: "Page", page_id: "1" } },
+            { name: "tab2", content: { type: "Page", page_id: "2" } },
+          ],
         },
       },
     ],
@@ -30,6 +59,7 @@ let pages = [
 function App() {
   const [modal, setModal] = useState();
   const [data, setData] = useState(pages);
+  console.log(JSON.stringify(data));
   const [forms, setForms] = useState([
     {
       name: "abc",

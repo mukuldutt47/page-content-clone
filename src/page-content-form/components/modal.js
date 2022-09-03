@@ -6,7 +6,7 @@ export default function Modal({ modal }) {
   return (
     (modal?.typeId && (
       <div
-        className="absolute w-full h-full left-0 top-0 z-10 bg-gray-200 bg-opacity-50"
+        className="w-full h-full left-0 top-0 z-10 bg-gray-200 bg-opacity-50 fixed"
         onClick={(e) => {
           [...e.target?.classList]?.includes?.("modal-content") &&
             formContext?.setModal();

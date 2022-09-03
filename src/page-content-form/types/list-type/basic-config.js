@@ -5,7 +5,7 @@ import { Checkbox, Radio, TextInput } from "../../inputs";
 
 export default function BasicConfig({ pageContentData }) {
   const context = useContext(FormContext);
-  const { setData, data } = context;
+  const { setData, data, onDynamicUpdate } = context;
   const updateState = () => {
     setData([...context.data]);
   };
@@ -15,7 +15,7 @@ export default function BasicConfig({ pageContentData }) {
       if (typeof pageContentData?.content?.[intializer] != "object") {
         pageContentData.content[intializer] = {};
         if (intializer === "pageable") {
-          pageContentData.content[intializer]= { count: [''] };
+          pageContentData.content[intializer] = { count: [""] };
         }
       }
     }
@@ -44,19 +44,11 @@ export default function BasicConfig({ pageContentData }) {
     { name: "File Name Template", value: "fileNameTemplate" },
     { name: "Paper Size", value: "paperSize" },
   ];
-  const onUpdate = (key, targetKey) => {
-    return ({ target }) => {
-      let evalData = eval(`pageContentData.content.${key.join(".")}`);
-      evalData = target[targetKey || "value"];
-      eval(`pageContentData.content.${key.join(".")} = evalData`);
-      updateState();
-    };
-  };
   return (
     <div className="flex flex-col gap-4">
       <TextInput
         label={"Route"}
-        onChange={onUpdate(["route"])}
+        onChange={onDynamicUpdate(["route"], null, pageContentData)}
         value={pageContentData.content?.route}
       />
       {configCheckboxes.map(({ name, value }) => {
@@ -64,14 +56,18 @@ export default function BasicConfig({ pageContentData }) {
           <Checkbox
             label={name}
             value={!!pageContentData?.content?.listOptions?.[value]}
-            onClick={onUpdate(["listOptions", value], "checked")}
+            onClick={onDynamicUpdate(
+              ["listOptions", value],
+              "checked",
+              pageContentData
+            )}
           />
         );
       })}
       <TextInput
         label={"Auto Refresh Interval"}
         value={pageContentData?.content?.autoRefresh}
-        onChange={onUpdate(["autoRefresh"])}
+        onChange={onDynamicUpdate(["autoRefresh"], null, pageContentData)}
       />
       <PageContentWrapper label={"Paging Options"} width="w-full">
         <div className="flex gap-3  flex-wrap">
@@ -79,13 +75,21 @@ export default function BasicConfig({ pageContentData }) {
             <TextInput
               label={"Button Count"}
               value={pageContentData?.content?.pageable?.["buttonCount"]}
-              onChange={onUpdate(["pageable", "buttonCount"])}
+              onChange={onDynamicUpdate(
+                ["pageable", "buttonCount"],
+                null,
+                pageContentData
+              )}
             />
           </div>
           <div className="flex-1">
             <DataGrid
               onRemove={(index) => {
-                onUpdate(["pageable", "count"])({
+                onDynamicUpdate(
+                  ["pageable", "count"],
+                  null,
+                  pageContentData
+                )({
                   target: {
                     value: pageContentData?.content?.pageable?.count?.filter(
                       (_, i) => i !== index
@@ -94,7 +98,11 @@ export default function BasicConfig({ pageContentData }) {
                 });
               }}
               onAdd={() => {
-                onUpdate(["pageable", "count"])({
+                onDynamicUpdate(
+                  ["pageable", "count"],
+                  null,
+                  pageContentData
+                )({
                   target: {
                     value: [
                       ...(pageContentData?.content?.pageable?.count || []),
@@ -128,7 +136,11 @@ export default function BasicConfig({ pageContentData }) {
                 <TextInput
                   label={name}
                   value={pageContentData?.content?.exportToPDF?.[value]}
-                  onChange={onUpdate(["exportToPDF", value])}
+                  onChange={onDynamicUpdate(
+                    ["exportToPDF", value],
+                    null,
+                    pageContentData
+                  )}
                 />
               </div>
             );
@@ -137,7 +149,11 @@ export default function BasicConfig({ pageContentData }) {
             <Checkbox
               label={"Repeat Headers"}
               value={!!pageContentData?.content?.exportToPDF?.["repeatHeaders"]}
-              onClick={onUpdate(["exportToPDF", "repeatHeaders"], "checked")}
+              onClick={onDynamicUpdate(
+                ["exportToPDF", "repeatHeaders"],
+                "checked",
+                pageContentData
+              )}
             />
           </div>
           <div className="flex-1">
@@ -147,7 +163,11 @@ export default function BasicConfig({ pageContentData }) {
                 { label: "Landscape", value: "landscape" },
               ]}
               value={pageContentData?.content?.exportToPDF?.["orientation"]}
-              onClick={onUpdate(["exportToPDF", "orientation"])}
+              onClick={onDynamicUpdate(
+                ["exportToPDF", "orientation"],
+                null,
+                pageContentData
+              )}
             >
               Orientation
             </Radio>
