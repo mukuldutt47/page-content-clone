@@ -8,7 +8,7 @@ export default function TextInput({
   placeholder,
 }) {
   return (
-    <div className="flex flex-col gap-1 w-auto">
+    <div className="flex-1 flex flex-col gap-1 w-auto">
       <label className="text-xs">{label}</label>
       <input
       className="p-1 border focus:outline-none border-opacity-80 border-gray-300 rounded-md px-2"

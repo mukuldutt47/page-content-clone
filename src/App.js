@@ -6,7 +6,7 @@ import Modal from "./page-content-form/components/modal";
 const FormContext = createContext({});
 let pages = [
   {
-    uuid: Math.random(),
+    uuid: "123",
     name: "page1",
     description: "description",
     content: [
@@ -15,8 +15,18 @@ let pages = [
         content: {},
       },
       {
-        type: "List",
-        content: {},
+        type: "TabSegment",
+        content: {
+          tabs: [
+            {
+              name: "tab1",
+              content: {
+                type: "Page",
+                page_id: "123",
+              },
+            },
+          ],
+        },
       },
     ],
   },
@@ -40,12 +50,61 @@ function App() {
       setData([...original]);
     } catch (e) {}
   };
+
+  const onDynamicUpdate = (key, targetKey, pageContentData) => {
+    return ({ target }) => {
+      const fields = `pageContentData.content.${key.join(".")}`.split(".");
+      const parsedStr = parser(fields);
+      let evalData = eval(parsedStr);
+      evalData = target[targetKey || "value"];
+      eval(`${parsedStr}= evalData`);
+      setData([...data]);
+    };
+  };
+
+  const getPages = () => {
+    return [
+      { label: "Select Page", uuid: null },
+      ...data.map(({ uuid, name }) => {
+        return { label: name, uuid };
+      }),
+    ];
+  };
+
   return (
-    <FormContext.Provider value={{ setModal, data, setData, forms, updateObject}}>
+    <FormContext.Provider
+      value={{
+        setModal,
+        data,
+        setData,
+        forms,
+        updateObject,
+        onDynamicUpdate,
+        getPages,
+      }}
+    >
       <PageContentForm />
       <Modal modal={modal} />
     </FormContext.Provider>
   );
+}
+function parser(fields) {
+  fields = fields.map((v) => {
+    const isNum = !isNaN(Number(v));
+    return { value: isNum ? `[${v}]` : v, isNum };
+  });
+  let str = "";
+  for (let i = 0; i < fields.length; i++) {
+    const { value, isNum } = fields[i];
+    str += value;
+    if (i === fields.length - 1) continue;
+    if (isNum) {
+      str += (fields[i + 1]?.isNum && "") || ".";
+    } else {
+      str += fields[i + 1]?.isNum ? "" : ".";
+    }
+  }
+  return str;
 }
 export { FormContext };
 export default App;
