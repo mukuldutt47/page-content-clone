@@ -9,7 +9,7 @@ export default function Columns({ pageContentData }) {
   useEffect(() => {
     for (let intializer of intializers) {
       if (typeof pageContentData?.content?.[intializer] != "object") {
-        pageContentData.content[intializer] = [];
+        pageContentData.content[intializer] = [{}];
       }
     }
     setData([...context.data]);
