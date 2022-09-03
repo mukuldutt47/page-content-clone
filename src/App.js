@@ -15,17 +15,13 @@ let pages = [
         content: {},
       },
       {
-        type: "TabSegment",
+        type: "RenderButtons",
         content: {
-          tabs: [
-            {
-              name: "tab1",
-              content: {
-                type: "Page",
-                page_id: "123",
-              },
-            },
-          ],
+         buttonList : [{
+          icon : 'abc',
+          rule : 'true',
+          details : [{form_id : 'form', type : 'form'}]
+         }]
         },
       },
     ],

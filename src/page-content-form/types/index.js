@@ -6,9 +6,11 @@ import HTMLType from "./html-type";
 import ListType from "./list-type";
 import PageType from "./page-type";
 import ReactComponentType from "./reactcomponent-type";
+import RenderButtons from "./renderbuttons-type";
 import TabsegmentType from "./tabsegment-type";
 
 export {
+  RenderButtons,
   TabsegmentType,
   PageType,
   HistoryType,

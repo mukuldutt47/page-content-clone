@@ -10,6 +10,7 @@ import {
   ListType,
   PageType,
   ReactComponentType,
+  RenderButtons,
   TabsegmentType,
 } from "../types";
 import AttachmentType from "../types/attachment-type";
@@ -24,10 +25,10 @@ class Types {
   static HISTORY = "History";
   static PAGE = "Page";
   static TAB_SEGMENT = "TabSegment";
+  static RENDER_BUTTONS = "RenderButtons";
 }
 export default function PageContent({ contentTypeIndex, pageIndex }) {
   const context = useContext(FormContext);
-  console.log(context.data);
   let pageContentData = context?.data?.[pageIndex]?.content?.[contentTypeIndex];
   const pageContent = {
     component: getComponent(pageContentData.type),
@@ -64,6 +65,7 @@ export default function PageContent({ contentTypeIndex, pageIndex }) {
           { label: Types.HISTORY, value: Types.HISTORY },
           { label: Types.PAGE, value: Types.PAGE },
           { label: Types.TAB_SEGMENT, value: Types.TAB_SEGMENT },
+          { label: Types.RENDER_BUTTONS, value: Types.RENDER_BUTTONS },
         ]}
       />
       {pageContent.component && (
@@ -104,5 +106,7 @@ function getComponent(value) {
       return PageType;
     case Types.TAB_SEGMENT:
       return TabsegmentType;
+    case Types.RENDER_BUTTONS:
+      return RenderButtons;
   }
 }
