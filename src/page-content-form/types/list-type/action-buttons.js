@@ -20,7 +20,7 @@ export default function ActionButtons({ pageContentData }) {
     <DataGrid
       onRemove={(index) => {
         onDynamicUpdate(
-          ["actions"],
+          ["content" ,"actions"],
           null,
           pageContentData
         )({
@@ -33,7 +33,7 @@ export default function ActionButtons({ pageContentData }) {
       }}
       onAdd={() => {
         onDynamicUpdate(
-          ["actions"],
+          ["content" ,"actions"],
           null,
           pageContentData
         )({
@@ -74,7 +74,7 @@ function ActionButton({ context, actionBtn, pageContentData, index }) {
               label={name}
               value={actionBtn[value]}
               onChange={context.onDynamicUpdate(
-                ["actions", index, value],
+                ["content" ,"actions", index, value],
                 null,
                 pageContentData
               )}
@@ -86,7 +86,7 @@ function ActionButton({ context, actionBtn, pageContentData, index }) {
         label={"Default Action"}
         value={!!actionBtn["defaultAction"]}
         onClick={context.onDynamicUpdate(
-          ["actions", index, "defaultAction"],
+          ["content" ,"actions", index, "defaultAction"],
           null,
           pageContentData
         )}

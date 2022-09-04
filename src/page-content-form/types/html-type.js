@@ -5,19 +5,10 @@ import { TextInput } from "../inputs";
 
 export default function HTMLType({ pageContentData }) {
   const context = useContext(FormContext);
-  const update = (type, targetValue) => {
-    return (e) => {
-      context.updateObject(
-        type,
-        pageContentData,
-        e.target[targetValue],
-        context.data
-      );
-    };
-  };
+  const { onDynamicUpdate } = context;
   useEffect(() => {
     if (typeof pageContentData["htmlContent"] === "undefined") {
-      update("htmlContent", "value")({ target: { value: "" } });
+      onDynamicUpdate(["htmlContent"], null, pageContentData)({ target: { value: "" } });
     }
   }, []);
   return (
@@ -25,7 +16,7 @@ export default function HTMLType({ pageContentData }) {
       <TextInput
         label={"HTML Content"}
         value={pageContentData["htmlContent"]}
-        onChange={update("htmlContent", "value")}
+        onChange={onDynamicUpdate(["htmlContent"], null, pageContentData)}
       />
     </PageContentWrapper>
   );

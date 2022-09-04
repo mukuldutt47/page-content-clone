@@ -3,23 +3,16 @@ import { FormContext } from "../../App";
 import { PageContentWrapper } from "../components";
 import { Checkbox, DropDown, Radio, TextInput } from "../inputs";
 
-export default function FormType({
-  pageContentData,
-}) {
+export default function FormType({ pageContentData }) {
   const context = useContext(FormContext);
-  const update = (type, targetValue) => {
-    return (e) => {
-      context.updateObject(
-        type,
-        pageContentData,
-        e.target[targetValue],
-        context.data
-      );
-    };
-  };
+  const { onDynamicUpdate } = context;
   useEffect(() => {
     if (typeof pageContentData["formSource"] === "undefined") {
-      update("formSource", "value")({ target: { value: "existingForm" } });
+      onDynamicUpdate(
+        ["formSource"],
+        null,
+        pageContentData
+      )({ target: { value: "existingForm" } });
     }
   }, []);
   return (
@@ -33,12 +26,12 @@ export default function FormType({
             { label: "url", value: "url" },
           ]}
           value={pageContentData["formSource"]}
-          onClick={update("formSource", "value")}
+          onClick={onDynamicUpdate(["formSource"], null, pageContentData)}
         />
         <Checkbox
           label={"Read Only"}
           value={pageContentData["readOnly"]}
-          onClick={update("readOnly", "checked")}
+          onClick={onDynamicUpdate(["readOnly"], 'checked', pageContentData)}
         />
         <div className="flex gap-2 flex-1 flex-wrap">
           {pageContentData["formSource"] !== "url" ? (
@@ -48,16 +41,20 @@ export default function FormType({
                 return { value: form.uuid, label: form.name };
               })}
               value={pageContentData["form_id"]}
-              onChange={update("form_id", "value")}
+              onChange={onDynamicUpdate(["form_id"], null, pageContentData)}
             />
           ) : (
             <TextInput
               label={"URL"}
               value={pageContentData["url"]}
-              onChange={update("url", "value")}
+              onChange={onDynamicUpdate(["url"], null, pageContentData)}
             />
           )}
-          <TextInput label={"File Id"} disabled={true} value={"{{uuid}}"} />
+          <TextInput
+            label={"File Id"}
+            value={pageContentData["file_id"]}
+            onChange={onDynamicUpdate(["file_id"], null, pageContentData)}
+          />
         </div>
       </div>
     </PageContentWrapper>

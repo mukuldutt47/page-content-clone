@@ -19,7 +19,7 @@ export default function RenderButtons({ pageContentData }) {
       <DataGrid
         onRemove={(index) => {
           onDynamicUpdate(
-            ["buttonList"],
+            ["content", "buttonList"],
             null,
             pageContentData
           )({
@@ -32,6 +32,7 @@ export default function RenderButtons({ pageContentData }) {
         }}
         onAdd={() => {
           onDynamicUpdate(
+            "content",
             ["buttonList"],
             null,
             pageContentData
@@ -75,7 +76,7 @@ function Button({ context, button, pageContentData, index }) {
               label={name}
               value={button[value]}
               onChange={context.onDynamicUpdate(
-                ["buttonList", index, value],
+                ["content", "buttonList", index, value],
                 null,
                 pageContentData
               )}
@@ -86,7 +87,7 @@ function Button({ context, button, pageContentData, index }) {
           label={"Form Id"}
           value={button?.details?.[0]?.form_id}
           onChange={context.onDynamicUpdate(
-            ["buttonList", index, "details", 0, "form_id"],
+            ["content", "buttonList", index, "details", 0, "form_id"],
             null,
             pageContentData
           )}
@@ -99,7 +100,7 @@ function Button({ context, button, pageContentData, index }) {
           ]}
           value={button?.details?.[0]?.type}
           onChange={context.onDynamicUpdate(
-            ["buttonList", index, "details", 0, "type"],
+            ["content", "buttonList", index, "details", 0, "type"],
             null,
             pageContentData
           )}

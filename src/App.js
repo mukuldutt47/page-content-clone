@@ -34,16 +34,10 @@ function App() {
       uuid: "",
     },
   ]);
-  const updateObject = (key, field, value, original) => {
-    try {
-      field[key] = value;
-      setData([...original]);
-    } catch (e) {}
-  };
 
   const onDynamicUpdate = (key, targetKey, pageContentData) => {
     return ({ target }) => {
-      const fields = `pageContentData.content.${key.join(".")}`.split(".");
+      const fields = `pageContentData.${key.join(".")}`.split(".");
       const parsedStr = parser(fields);
       let evalData = eval(parsedStr);
       evalData = target[targetKey || "value"];
@@ -68,7 +62,6 @@ function App() {
         data,
         setData,
         forms,
-        updateObject,
         onDynamicUpdate,
         getPages,
       }}

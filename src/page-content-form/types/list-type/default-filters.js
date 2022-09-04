@@ -9,7 +9,11 @@ export default function DefaultFilters({ pageContentData }) {
     <TextInput
       label={"Default Filter"}
       value={pageContentData.content?.defaultFilters}
-      onChange={onDynamicUpdate(["defaultFilters"], null, pageContentData)}
+      onChange={onDynamicUpdate(
+        ["content", "defaultFilters"],
+        null,
+        pageContentData
+      )}
     />
   );
 }

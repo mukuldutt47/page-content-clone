@@ -51,7 +51,7 @@ export default function BasicConfig({ pageContentData }) {
     <div className="flex flex-col gap-4">
       <TextInput
         label={"Route"}
-        onChange={onDynamicUpdate(["route"], null, pageContentData)}
+        onChange={onDynamicUpdate(["content","route"], null, pageContentData)}
         value={pageContentData.content?.route}
       />
       {configCheckboxes.map(({ name, value }) => {
@@ -60,7 +60,7 @@ export default function BasicConfig({ pageContentData }) {
             label={name}
             value={!!pageContentData?.content?.listOptions?.[value]}
             onClick={onDynamicUpdate(
-              ["listOptions", value],
+              ["content", "listOptions", value],
               "checked",
               pageContentData
             )}
@@ -70,7 +70,11 @@ export default function BasicConfig({ pageContentData }) {
       <TextInput
         label={"Auto Refresh Interval"}
         value={pageContentData?.content?.autoRefresh}
-        onChange={onDynamicUpdate(["autoRefresh"], null, pageContentData)}
+        onChange={onDynamicUpdate(
+          ["content", "autoRefresh"],
+          null,
+          pageContentData
+        )}
       />
       <PageContentWrapper label={"Paging Options"} width="w-full">
         <div className="flex gap-3  flex-wrap">
@@ -79,7 +83,7 @@ export default function BasicConfig({ pageContentData }) {
               label={"Button Count"}
               value={pageContentData?.content?.pageable?.["buttonCount"]}
               onChange={onDynamicUpdate(
-                ["pageable", "buttonCount"],
+                ["content", "pageable", "buttonCount"],
                 null,
                 pageContentData
               )}
@@ -89,7 +93,7 @@ export default function BasicConfig({ pageContentData }) {
             <DataGrid
               onRemove={(index) => {
                 onDynamicUpdate(
-                  ["pageable", "count"],
+                  ["content", "pageable", "count"],
                   null,
                   pageContentData
                 )({
@@ -102,7 +106,7 @@ export default function BasicConfig({ pageContentData }) {
               }}
               onAdd={() => {
                 onDynamicUpdate(
-                  ["pageable", "count"],
+                  ["content", "pageable", "count"],
                   null,
                   pageContentData
                 )({
@@ -140,7 +144,7 @@ export default function BasicConfig({ pageContentData }) {
                   label={name}
                   value={pageContentData?.content?.exportToPDF?.[value]}
                   onChange={onDynamicUpdate(
-                    ["exportToPDF", value],
+                    ["content", "exportToPDF", value],
                     null,
                     pageContentData
                   )}
@@ -153,7 +157,7 @@ export default function BasicConfig({ pageContentData }) {
               label={"Repeat Headers"}
               value={!!pageContentData?.content?.exportToPDF?.["repeatHeaders"]}
               onClick={onDynamicUpdate(
-                ["exportToPDF", "repeatHeaders"],
+                ["content", "exportToPDF", "repeatHeaders"],
                 "checked",
                 pageContentData
               )}
@@ -167,7 +171,7 @@ export default function BasicConfig({ pageContentData }) {
               ]}
               value={pageContentData?.content?.exportToPDF?.["orientation"]}
               onClick={onDynamicUpdate(
-                ["exportToPDF", "orientation"],
+                ["content", "exportToPDF", "orientation"],
                 null,
                 pageContentData
               )}

@@ -18,7 +18,7 @@ export default function Columns({ pageContentData }) {
     <DataGrid
       onRemove={(index) => {
         onDynamicUpdate(
-          ["columns"],
+          ["content" ,"columns"],
           null,
           pageContentData
         )({
@@ -31,7 +31,7 @@ export default function Columns({ pageContentData }) {
       }}
       onAdd={() => {
         onDynamicUpdate(
-          ["columns"],
+          ["content" ,"columns"],
           null,
           pageContentData
         )({
@@ -86,7 +86,7 @@ function Column({
               label={name}
               value={column[value]}
               onChange={context.onDynamicUpdate(
-                ["columns", index, value],
+                ["content" ,"columns", index, value],
                 null,
                 pageContentData
               )}
@@ -101,7 +101,7 @@ function Column({
               label={name}
               value={!!column[value]}
               onClick={context.onDynamicUpdate(
-                ["columns", index, value],
+                ["content" ,"columns", index, value],
                 "checked",
                 pageContentData
               )}
@@ -118,7 +118,7 @@ function Column({
                   label={name}
                   value={column[value]}
                   onChange={context.onDynamicUpdate(
-                    ["columns", index, value],
+                    ["content" ,"columns", index, value],
                     null,
                     pageContentData
                   )}
@@ -130,7 +130,7 @@ function Column({
             label={"Cell HTML"}
             value={column.cell}
             onChange={context.onDynamicUpdate(
-              ["columns", index, "cell"],
+              ["content" ,"columns", index, "cell"],
               null,
               pageContentData
             )}

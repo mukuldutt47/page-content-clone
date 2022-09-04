@@ -5,19 +5,14 @@ import { TextInput } from "../inputs";
 
 export default function HistoryType({ pageContentData }) {
   const context = useContext(FormContext);
-  const update = (type, targetValue) => {
-    return (e) => {
-      context.updateObject(
-        type,
-        pageContentData,
-        e.target[targetValue],
-        context.data
-      );
-    };
-  };
+  const { onDynamicUpdate } = context;
   useEffect(() => {
     if (typeof pageContentData?.["content"] !== "string") {
-      update("content", "value")({ target: { value: "{{uuid}}" } });
+      onDynamicUpdate(
+        ["content"],
+        null,
+        pageContentData
+      )({ target: { value: "{{uuid}}" } });
     }
   }, []);
   return (

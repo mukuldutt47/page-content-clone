@@ -5,19 +5,14 @@ import { DropDown, TextInput } from "../inputs";
 
 export default function PageType({ pageContentData }) {
   const context = useContext(FormContext);
-  const update = (type, targetValue) => {
-    return (e) => {
-      context.updateObject(
-        type,
-        pageContentData,
-        e.target[targetValue],
-        context.data
-      );
-    };
-  };
+  const { onDynamicUpdate } = context;
   useEffect(() => {
     if (typeof pageContentData?.["page_id"] === "undefined") {
-      update("page_id", "value")({ target: { value: "" } });
+      onDynamicUpdate(
+        ["page_id"],
+        null,
+        pageContentData
+      )({ target: { value: "" } });
     }
   }, []);
   return (
@@ -28,7 +23,7 @@ export default function PageType({ pageContentData }) {
           return { value: `${page.uuid}`, label: page.name };
         })}
         value={pageContentData["page_id"]}
-        onChange={update("page_id", "value")}
+        onChange={onDynamicUpdate(["page_id"], null, pageContentData)}
       />
     </PageContentWrapper>
   );
