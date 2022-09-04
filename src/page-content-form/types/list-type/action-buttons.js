@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { FormContext } from "../../../App";
 import { DataGrid } from "../../components";
-import { Checkbox, DropDown, TextInput } from "../../inputs";
+import { PageContent } from "../../contents";
+import { Checkbox, TextInput } from "../../inputs";
 
 export default function ActionButtons({ pageContentData }) {
   const context = useContext(FormContext);
@@ -83,27 +84,18 @@ function ActionButton({ context, actionBtn, pageContentData, index }) {
       </div>
       <Checkbox
         label={"Default Action"}
-        value={!!actionBtn['defaultAction']}
+        value={!!actionBtn["defaultAction"]}
         onClick={context.onDynamicUpdate(
-          ["actions", index, 'defaultAction'],
+          ["actions", index, "defaultAction"],
           null,
           pageContentData
         )}
       />
-      <DropDown
-        label={"Pages"}
-        data={context.getPages?.()}
-        value={actionBtn?.details?.[0].page_id}
-        onChange={context.onDynamicUpdate(
-          ["actions", index, "details", 0, "page_id"],
-          null,
-          pageContentData
-        )}
-      />
+      <PageContent pageContentData={actionBtn?.details[0]}/>
     </div>
   );
 }
 
 function getNewActionButton() {
-  return { details: [{ type: "Page", page_id: "" }] };
+  return { details: [{ type: "", content: {} }] };
 }

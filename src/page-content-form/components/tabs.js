@@ -9,7 +9,7 @@ export default function Tabs({ children, activeTab, tabs = [] }) {
   );
   return (
     <div className="flex gap-2 flex-col">
-      <div className="flex flex-wrap gap-2 top-0 sticky">
+      <div className="flex flex-wrap gap-2">
         {tabs.map((tab) => {
           return (
             <div

@@ -11,6 +11,9 @@ export default function BasicConfig({ pageContentData }) {
   };
   const intializers = ["listOptions", "pageable", "exportToPDF"];
   useEffect(() => {
+    if (!pageContentData.content) {
+      pageContentData.content = {};
+    }
     for (let intializer of intializers) {
       if (typeof pageContentData?.content?.[intializer] != "object") {
         pageContentData.content[intializer] = {};
