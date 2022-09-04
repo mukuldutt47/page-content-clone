@@ -7,8 +7,10 @@ export default function RenderButtons({ pageContentData }) {
   const { setData, data, onDynamicUpdate } = context;
   useEffect(() => {
     if (!Array.isArray(pageContentData?.content?.buttonList)) {
-      pageContentData.content.buttonList = getEmptyRenderButton();
-    setData([...context.data]);
+      pageContentData.content = {
+        buttonList: getEmptyRenderButton(),
+      };
+      setData([...context.data]);
     }
   }, []);
   const buttonList = pageContentData?.content?.buttonList;

@@ -49,6 +49,9 @@ export default function Page({ pageIndex, pageData }) {
               <PageContent
                 pageIndex={pageIndex}
                 contentTypeIndex={contentTypeIndex}
+                pageContentData={
+                  context?.data?.[pageIndex]?.content?.[contentTypeIndex]
+                }
               />
             );
           })}

@@ -5,6 +5,7 @@ import { TextInput } from "../inputs";
 
 export default function ReactComponentType({ pageContentData }) {
   const context = useContext(FormContext);
+  const { setData, onDynamicUpdate } = context;
   const update = (type, targetValue) => {
     return (e) => {
       context.updateObject(
@@ -16,8 +17,14 @@ export default function ReactComponentType({ pageContentData }) {
     };
   };
   useEffect(() => {
-    if (typeof pageContentData["content"]?.["reactId"] === "undefined") {
-      update("reactId", "value")({ target: { value: "" } });
+    if (!pageContentData["content"]?.["reactId"]) {
+      pageContentData["content"] = {};
+      setData([...context.data]);
+      // onDynamicUpdate(
+      //   ["reactId"],
+      //   null,
+      //   pageContentData
+      // )({ target: { value: "" } });
     }
   }, []);
   return (
@@ -25,7 +32,7 @@ export default function ReactComponentType({ pageContentData }) {
       <TextInput
         label={"React Id"}
         value={pageContentData.content?.["reactId"]}
-        onChange={update("reactId", "value")}
+        onChange={onDynamicUpdate(["reactId"], null, pageContentData)}
       />
     </PageContentWrapper>
   );

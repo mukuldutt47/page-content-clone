@@ -24,7 +24,7 @@ export default function DashboardType({ pageContentData }) {
     <PageContentWrapper label={"HTML Viewer"}>
       <TextInput
         label={"Dashboard UUID"}
-        value={pageContentData.content?.["uuid"]}
+        value={pageContentData?.["uuid"]}
         onChange={update("uuid", "value")}
       />
     </PageContentWrapper>

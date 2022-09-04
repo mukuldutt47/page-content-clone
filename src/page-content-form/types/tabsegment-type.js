@@ -1,6 +1,7 @@
 import React from "react";
 import { FormContext } from "../../App";
 import { DataGrid, PageContentWrapper } from "../components";
+import { PageContent } from "../contents";
 import { DropDown, TextInput } from "../inputs";
 const { useContext, useEffect } = React;
 export default function TabsegmentType({ pageContentData }) {
@@ -12,13 +13,17 @@ export default function TabsegmentType({ pageContentData }) {
         tabs: [
           {
             name: "",
-            content: {},
+            content: [
+              {
+                content: {},
+              },
+            ],
           },
         ],
       };
       setData([...context.data]);
     }
-  }, []);
+  }, [pageContentData?.["content"]]);
   const onRemove = (index) => {
     pageContentData["content"].tabs = pageContentData["content"].tabs.filter(
       (_, i) => i != index
@@ -28,7 +33,11 @@ export default function TabsegmentType({ pageContentData }) {
   const onAdd = () => {
     pageContentData["content"].tabs.push({
       name: "",
-      content: {},
+      content: [
+        {
+          content: {},
+        },
+      ],
     });
     setData([...context.data]);
   };
@@ -68,7 +77,10 @@ function Node(props) {
           updateTabData(index, "name", e.target.value);
         }}
       />
-      <DropDown
+      {tab.content.map((c) => {
+        return <PageContent pageContentData={c} />;
+      })}
+      {/* <DropDown
         label={"Pages"}
         data={[{ name: "", uuid: "" }, ...context.data]?.map((page) => {
           return { value: `${page.uuid}`, label: page.name };
@@ -79,8 +91,8 @@ function Node(props) {
             type: "Page",
             page_id: e.target.value,
           });
-        }}
-      />
+        }} */}
+      {/* /> */}
     </div>
   );
 }

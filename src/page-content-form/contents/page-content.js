@@ -27,9 +27,13 @@ class Types {
   static TAB_SEGMENT = "TabSegment";
   static RENDER_BUTTONS = "RenderButtons";
 }
-export default function PageContent({ contentTypeIndex, pageIndex }) {
+export default function PageContent({
+  contentTypeIndex,
+  pageIndex,
+  pageContentData,
+}) {
   const context = useContext(FormContext);
-  let pageContentData = context?.data?.[pageIndex]?.content?.[contentTypeIndex];
+  // let pageContentData = context?.data?.[pageIndex]?.content?.[contentTypeIndex];
   const pageContent = {
     component: getComponent(pageContentData.type),
     value: pageContentData.type,
@@ -48,7 +52,7 @@ export default function PageContent({ contentTypeIndex, pageIndex }) {
     };
   };
   return (
-    <div className="flex gap-2 flex-col">
+    <div className="flex gap-2 flex-col flex-1">
       <DropDown
         label={"Content Type"}
         onChange={onChangeType("type")}
@@ -70,12 +74,12 @@ export default function PageContent({ contentTypeIndex, pageIndex }) {
       />
       {pageContent.component && (
         <div
-          onClick={() =>
+          onClick={() => {
             context.setModal?.({
               typeId: Math.random(),
               data: <pageContent.component pageContentData={pageContentData} />,
-            })
-          }
+            });
+          }}
           className="flex justify-center border border-gray-300 p-2 rounded-md cursor-pointer text-sm hover:bg-gray-500 hover:text-cyan-50"
         >
           {`Select ${pageContent.value}`}

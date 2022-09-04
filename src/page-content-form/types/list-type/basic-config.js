@@ -15,7 +15,7 @@ export default function BasicConfig({ pageContentData }) {
       if (typeof pageContentData?.content?.[intializer] != "object") {
         pageContentData.content[intializer] = {};
         if (intializer === "pageable") {
-          pageContentData.content[intializer] = { count: [""] };
+          pageContentData.content[intializer] = { count: [10] };
         }
       }
     }
