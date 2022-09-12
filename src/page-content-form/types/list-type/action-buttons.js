@@ -11,13 +11,14 @@ export default function ActionButtons({ pageContentData }) {
   useEffect(() => {
     for (let intializer of intializers) {
       if (typeof pageContentData?.content?.[intializer] != "object") {
-        pageContentData.content[intializer] = [getNewActionButton()];
+        pageContentData.content[intializer] = []//getNewActionButton()];
       }
     }
     setData([...context.data]);
   }, []);
   return (
     <DataGrid
+    optional={true}
       onRemove={(index) => {
         onDynamicUpdate(
           ["content" ,"actions"],

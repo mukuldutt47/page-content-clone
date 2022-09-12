@@ -4,31 +4,26 @@ import PageContentForm from "./page-content-form/page-content-form";
 import { createContext, useState } from "react";
 import Modal from "./page-content-form/components/modal";
 const FormContext = createContext({});
-let pages = [];
-function map(pages) {
-  let maps = new Set();
-  const data = (pages, prev = []) => {
-    for (let page in pages) {
-      if (typeof pages[page] === "object") {
-        data(pages[page], [...prev, page]);
-      } else {
-        // console.log(prev, page, pages);
-        maps.add(prev.join('.'))
-        // if (pages?.type === "TabSegment") {
-        //   // pages?.content
-        //   pages?.content?.tabs?.forEach((v) => {
-        //     v.content = [1];
-        //   });
-        // }
+let pages = []
+function map(pages, prev = []) {
+  for (let page in pages) {
+    if (typeof pages[page] === "object") {
+      map(pages[page], [...prev, page]);
+    } else {
+      // console.log(prev, page, pages);
+      if (pages?.type === "TabSegment") {
+        // pages?.content
+        pages?.content?.tabs?.forEach((v) => {
+          v.content = [1];
+        });
       }
     }
   }
-  data(pages);
-  // console.log([...maps])
 }
 function App() {
   const [modal, setModal] = useState();
   const [data, setData] = useState(pages);
+  console.log(JSON.stringify(data))
   const [forms, setForms] = useState([
     {
       name: "abc",
@@ -39,8 +34,7 @@ function App() {
       uuid: "",
     },
   ]);
-  // console.log(data);
-  map(JSON.parse(JSON.stringify(data)));
+
   const onDynamicUpdate = (key, targetKey, pageContentData) => {
     return ({ target }) => {
       const fields = `pageContentData.${key.join(".")}`.split(".");

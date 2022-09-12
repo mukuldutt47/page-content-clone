@@ -35,6 +35,7 @@ export default function Page({ pageIndex, pageData }) {
           label={"Name"}
           value={pageData.name}
           onChange={setData("name")}
+          validation={{}}
         />
         <TextInput
           label={"Description"}
@@ -47,6 +48,7 @@ export default function Page({ pageIndex, pageData }) {
           {pageData.content.map((c, contentTypeIndex) => {
             return (
               <PageContent
+                key={contentTypeIndex}
                 pageIndex={pageIndex}
                 contentTypeIndex={contentTypeIndex}
                 pageContentData={

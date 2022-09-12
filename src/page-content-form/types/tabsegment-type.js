@@ -4,7 +4,7 @@ import { DataGrid, PageContentWrapper } from "../components";
 import { PageContent } from "../contents";
 import { DropDown, TextInput } from "../inputs";
 const { useContext, useEffect } = React;
-export default function TabsegmentType({ pageContentData }) {
+export default function TabsegmentType({ pageContentData, parentId }) {
   const context = useContext(FormContext);
   const { setData, data } = context;
   useEffect(() => {
@@ -58,6 +58,7 @@ export default function TabsegmentType({ pageContentData }) {
               updateTabData={updateTabData}
               context={context}
               tab={tab}
+              parentId={parentId}
             />
           );
         })}
@@ -67,7 +68,14 @@ export default function TabsegmentType({ pageContentData }) {
 }
 
 function Node(props) {
-  const { index, pageContentData, updateTabData, context, tab = {} } = props;
+  const {
+    index,
+    pageContentData,
+    updateTabData,
+    context,
+    tab = {},
+    parentId,
+  } = props;
   return (
     <div className="flex gap-4 flex-wrap" key={`${index}-123`}>
       <TextInput
@@ -77,22 +85,7 @@ function Node(props) {
           updateTabData(index, "name", e.target.value);
         }}
       />
-      {tab.content.map((c) => {
-        return <PageContent pageContentData={c} />;
-      })}
-      {/* <DropDown
-        label={"Pages"}
-        data={[{ name: "", uuid: "" }, ...context.data]?.map((page) => {
-          return { value: `${page.uuid}`, label: page.name };
-        })}
-        value={tab?.content?.page_id}
-        onChange={(e) => {
-          updateTabData(index, "content", {
-            type: "Page",
-            page_id: e.target.value,
-          });
-        }} */}
-      {/* /> */}
+      <PageContent pageContentData={tab.content[0]} parentId={parentId} />;
     </div>
   );
 }

@@ -11,7 +11,6 @@ export default function DashboardType({ pageContentData }) {
       onDynamicUpdate(["uuid"], null, pageContentData)({ target: { value: "" } });
     }
   }, []);
-  console.log(pageContentData)
   return (
     <PageContentWrapper label={"HTML Viewer"}>
       <TextInput

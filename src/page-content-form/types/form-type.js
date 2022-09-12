@@ -29,6 +29,7 @@ export default function FormType({ pageContentData }) {
           onClick={onDynamicUpdate(["formSource"], null, pageContentData)}
         />
         <Checkbox
+        validation={{}}
           label={"Read Only"}
           value={pageContentData["readOnly"]}
           onClick={onDynamicUpdate(["readOnly"], 'checked', pageContentData)}

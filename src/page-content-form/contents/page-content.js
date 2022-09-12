@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { FormContext } from "../../App";
 import { DropDown } from "../inputs";
 import {
@@ -27,17 +27,53 @@ class Types {
   static TAB_SEGMENT = "TabSegment";
   static RENDER_BUTTONS = "RenderButtons";
 }
-export default function PageContent({
-  contentTypeIndex,
-  pageIndex,
-  pageContentData,
-}) {
+export default function PageContent({ pageContentData, parentId }) {
+  const [id, SetContentId] = useState(null);
+  // console.log(pageContentData)
+  // useMemo(() => {
+  //   return ;
+  // }, [])
   const context = useContext(FormContext);
   // let pageContentData = context?.data?.[pageIndex]?.content?.[contentTypeIndex];
   const pageContent = {
     component: getComponent(pageContentData.type),
     value: pageContentData.type,
   };
+  useEffect(() => {
+    if (pageContentData?.type?.length > 0) {
+      context.setModal?.({
+        typeId: Math.random(),
+        data: (
+          <pageContent.component
+            pageContentData={pageContentData}
+            parentId={id}
+          />
+        ),
+        id,
+      });
+    }
+  }, [pageContentData.type, id]);
+  useEffect(() => {
+    if (!id) {
+      SetContentId(`${Math.random()}${parentId ? `_${parentId}` : ""}`);
+    }
+    return () => {
+      // if (id) {
+      context.setModal?.({
+        remove: Math.random(),
+        id,
+      });
+      // }
+    };
+  }, [id]);
+  useEffect(() => {
+    return () => {
+      context.setModal?.({
+        remove: Math.random(),
+        id,
+      });
+    };
+  }, [pageContentData.type]);
   const onChangeType = (type) => {
     return (e) => {
       if (type === "type") {
@@ -52,10 +88,19 @@ export default function PageContent({
     };
   };
   return (
-    <div className="flex gap-2 flex-col flex-1">
+    <div className="flex gap-2 flex-col flex-1" id={id}>
       <DropDown
+        validation={{}}
         label={"Content Type"}
-        onChange={onChangeType("type")}
+        onChange={(e) => {
+          if (e.target.value === "") {
+            context.setModal?.({
+              remove: Math.random(),
+              id,
+            });
+          }
+          onChangeType("type")(e);
+        }}
         value={pageContent.value}
         data={[
           { label: "", value: "" },
@@ -74,10 +119,13 @@ export default function PageContent({
       />
       {pageContent.component && (
         <div
-          onClick={() => {
-            context.setModal?.({
-              typeId: Math.random(),
-              data: <pageContent.component pageContentData={pageContentData} />,
+          onClick={(e) => {
+            console.log(e);
+            setTimeout(() => {
+              context.setModal?.({
+                toggleModal: { value: true, id },
+                toggle: Math.random(),
+              });
             });
           }}
           className="flex justify-center border border-gray-300 p-2 rounded-md cursor-pointer text-sm hover:bg-gray-500 hover:text-cyan-50"

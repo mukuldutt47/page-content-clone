@@ -53,6 +53,7 @@ export default function BasicConfig({ pageContentData }) {
         label={"Route"}
         onChange={onDynamicUpdate(["content","route"], null, pageContentData)}
         value={pageContentData.content?.route}
+        validation={{}}
       />
       {configCheckboxes.map(({ name, value }) => {
         return (
@@ -175,6 +176,7 @@ export default function BasicConfig({ pageContentData }) {
                 null,
                 pageContentData
               )}
+              name={'Orientation'}
             >
               Orientation
             </Radio>

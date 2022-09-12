@@ -18,7 +18,7 @@ export default function Columns({ pageContentData }) {
     <DataGrid
       onRemove={(index) => {
         onDynamicUpdate(
-          ["content" ,"columns"],
+          ["content", "columns"],
           null,
           pageContentData
         )({
@@ -31,7 +31,7 @@ export default function Columns({ pageContentData }) {
       }}
       onAdd={() => {
         onDynamicUpdate(
-          ["content" ,"columns"],
+          ["content", "columns"],
           null,
           pageContentData
         )({
@@ -69,8 +69,8 @@ function Column({
     { name: "Reorderable", value: "reorderable" },
   ];
   const firstFields = [
-    { name: "Title", value: "title" },
-    { name: "Field Key", value: "field" },
+    { name: "Title", value: "title", validation: {} },
+    { name: "Field Key", value: "field", validation: {} },
   ];
   const columnFields = [
     { name: "Width", value: "width" },
@@ -80,13 +80,14 @@ function Column({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-2 flex-wrap">
-        {firstFields.map(({ name, value }) => {
+        {firstFields.map(({ name, value, validation }) => {
           return (
             <TextInput
+              validation={validation}
               label={name}
               value={column[value]}
               onChange={context.onDynamicUpdate(
-                ["content" ,"columns", index, value],
+                ["content", "columns", index, value],
                 null,
                 pageContentData
               )}
@@ -101,7 +102,7 @@ function Column({
               label={name}
               value={!!column[value]}
               onClick={context.onDynamicUpdate(
-                ["content" ,"columns", index, value],
+                ["content", "columns", index, value],
                 "checked",
                 pageContentData
               )}
@@ -118,7 +119,7 @@ function Column({
                   label={name}
                   value={column[value]}
                   onChange={context.onDynamicUpdate(
-                    ["content" ,"columns", index, value],
+                    ["content", "columns", index, value],
                     null,
                     pageContentData
                   )}
@@ -130,7 +131,7 @@ function Column({
             label={"Cell HTML"}
             value={column.cell}
             onChange={context.onDynamicUpdate(
-              ["content" ,"columns", index, "cell"],
+              ["content", "columns", index, "cell"],
               null,
               pageContentData
             )}
