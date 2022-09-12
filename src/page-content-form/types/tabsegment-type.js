@@ -85,7 +85,7 @@ function Node(props) {
           updateTabData(index, "name", e.target.value);
         }}
       />
-      <PageContent pageContentData={tab.content[0]} parentId={parentId} />;
+      <PageContent pageContentData={tab.content[0]} parentId={parentId} />
     </div>
   );
 }

@@ -17,6 +17,7 @@ export default function Radio({ name, data, onClick, value, validation }) {
         return (
           <div className="flex text-sm gap-2">
             <input
+              className="outline-none p-10px"
               type="radio"
               name={name}
               value={radioData.value}

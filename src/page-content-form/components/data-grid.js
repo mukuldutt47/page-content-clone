@@ -10,7 +10,7 @@ export default function DataGrid({ children, onAdd, onRemove, optional }) {
             <div className="flex flex-col relative">
               <div className="text-right">
                 <button
-                  className=" bg-blue-800 text-white rounded-md p-2 px-4 text-sm"
+                  className=" bg-blue-800 text-white rounded-md p-2 px-4 text-sm border-none"
                   onClick={() => {
                     if (children?.length > 1 || optional) {
                       onRemove?.(index);
@@ -27,7 +27,7 @@ export default function DataGrid({ children, onAdd, onRemove, optional }) {
       </div>
       <button
         onClick={() => onAdd?.()}
-        className="w-40 bg-blue-800 text-white rounded-md py-2"
+        className="w-40 bg-blue-800 text-white rounded-md py-2 cursor-pointer border-none"
       >
         Add Another
       </button>

@@ -20,7 +20,7 @@ export default function TextInput({
         {label} {validation && <span className="text-red-700">*</span>}
       </label>
       <input
-        className={`p-1 border focus:outline-none border-opacity-80 border-gray-300 rounded-md px-2 ${
+        className={`p-1 border outline-none p-10px border-opacity-80 border-gray-300 rounded-md px-2 ${
           !valid && "border-red-800"
         }`}
         type="text"
